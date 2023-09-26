@@ -1,6 +1,6 @@
 ---
 import Footer from '../components/Footer.astro'
-import UserStatus from './Online_offline';
+import Online_offline from './Online_offline.jsx';
 
 const { title } = Astro.props;
 //console.log(Astro.url)
@@ -53,7 +53,7 @@ const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('use
 
 </head>
 <body class="animsition">
-	{!landing && <UserStatus user={user} client:load />}
+	{!landing && <Online_offline user={user} client:load />}
 
 	{landing&&<slot />}
     {landing==false&&
