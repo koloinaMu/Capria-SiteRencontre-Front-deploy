@@ -1,0 +1,70 @@
+---
+const { user,moi } = Astro.props;
+
+const diffDays = Math.ceil(Math.abs(new Date() - new Date(user.dateDeNaissance)) / (1000 * 60 * 60 * 24));
+const age = parseInt(diffDays/365);
+//console.log(moi)
+---
+
+<style>
+    .p-content {
+        padding-left: 30%;
+    }
+</style>
+
+<div class="tab-pane fade show active" id="about" role="tabpanel">
+    <div class="p-content p-lr-15-md">
+        <table class="w-75">
+            <tr>
+                <td class="pb-2 w-50"><span class="stext-102 cl3 size-205">Nom</span></td>
+                <td class="text-left"><span class="stext-102 cl6 size-206">{user.nom}</span></td>
+            </tr>
+            <tr>
+                <td class="pb-2"><span class="stext-102 cl3 size-205">Prénom</span></td>
+                <td class="text-left"><span class="stext-102 cl6 size-206">{user.prenom}</span></td>
+            </tr>
+            <tr>
+                <td class="pb-2"><span class="stext-102 cl3 size-205">Sexe</span></td>
+                <td class="text-left"><span class="stext-102 cl6 size-206">{user.sexe == 'H' && 'Homme' || 
+                                                                            user.sexe == 'F' && 'Femme' ||
+                                                                            user.sexe == 'A' && 'Autre'}</span></td>
+            </tr>
+            <tr>
+                <td class="pb-2"><span class="stext-102 cl3 size-205">Age</span></td>
+                <td class="text-left"><span class="stext-102 cl6 size-206">{age} ans</span></td>
+            </tr>
+            <tr>
+                <td class="pb-2"><span class="stext-102 cl3 size-205">Ville</span></td>
+                <td class="text-left"><span class="stext-102 cl6 size-206">{user.ville}</span></td>
+            </tr>
+            <tr>
+                <td class="pb-2"><span class="stext-102 cl3 size-205">Nationalité</span></td>
+                <td class="text-left"><span class="stext-102 cl6 size-206">{user.nation}</span></td>
+            </tr>
+            <tr>
+                <td class="pb-2"><span class="stext-102 cl3 size-205">Orientation sexuel</span></td>
+                <td class="text-left"><span class="stext-102 cl6 size-206">{user.orientationSxl == 'Homo' ? 'Homosexuel' : 'Hétérosexuel'}</span></td>
+            </tr>
+        </table>
+        <!-- {moi==1&&
+        <table class="w-75 mt-5">
+            <tr>
+                <td class="w-50">
+                    <button type="button" class="flex-c-m stext-101 bg2 hov-btn1 size-116 p-lr-15 trans-04 mb-3" data-toggle="modal" data-target="#exampleModalCenter">Modifier mon profil</button>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        } -->
+    </div>
+</div>
+{moi==1&&
+    <div class="row mt-5">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <button type="button" class="flex-c-m stext-101 bg2 hov-btn1 size-116 p-lr-15 trans-04 mb-3" data-toggle="modal" data-target="#profileEditModal">Modifier mon profil</button>
+        </div>
+        <div class="col-md-4"></div>    
+    </div>
+}
+<!-- } -->  

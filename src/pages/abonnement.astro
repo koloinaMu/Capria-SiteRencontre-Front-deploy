@@ -1,0 +1,32 @@
+---
+import Page from '../components/Page.astro'
+import NavBar from '../components/NavBar.jsx'
+import Subscription from '../components/Subscription.jsx'
+
+---
+
+<Page title="Site rencontre - Abonnement" >
+	<!--Header & Cart-->
+	<NavBar client:load />
+
+    <!-- Product Detail -->
+	<section class="sec-product-detail bg0 p-t-65 p-b-60">
+		<div class="container">
+
+            <Subscription client:load />
+
+		</div>
+	</section>
+    <script>
+        // $('.btn-subscribe').on('click', function(){
+        //     // var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+        //     // $(this).on('click', function(){
+        //         swal('Payement effectué.', "Merci pour votre abonnement", "success");
+
+        //         // $(this).addClass('js-addedwish-b2');
+        //         // $(this).off('click');
+        //     // });
+        // });
+    </script>
+
+</Page>
