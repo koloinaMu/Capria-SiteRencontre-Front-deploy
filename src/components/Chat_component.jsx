@@ -1,4 +1,5 @@
-import ChatComponent from './Chat'
+//import ChatComponent from './Chat'
+import Chat_firebase from './Chat_firebase'
 import {useState,useEffect,Component} from 'react'
 import api from '../const/api'
 
@@ -112,7 +113,8 @@ export class Chat extends Component{
             (<Child data={this.state} />)
         }*/
         //initialisation()
-        return(<ChatComponent user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive} key={this.state.chatActive.id}  />)
+        /*return(<ChatComponent user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive} key={this.state.chatActive.id}  />)*/
+        return(<Chat_firebase user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive} key={this.state.chatActive.id}  />)
         /*return (
             {this.state.chatActive && 
                 (<ChatComponent user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive}  />)
