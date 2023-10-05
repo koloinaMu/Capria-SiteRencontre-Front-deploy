@@ -11,7 +11,7 @@ export default function Chat_firebase(props) {
     
     const [userChatActive, setUserChatActive] = useState(props.chatActive)  //useState(JSON.parse(localStorage.getItem('userChatActive')))
     var userChatActive1=props.chatActive
-    const [user, setUser] = useState();
+    const user = JSON.parse(localStorage.getItem("user"))[0]  ;
 
     const [messages, setMessages] = useState([])
     const [yourMessage, setYourMessage] = useState()
@@ -60,8 +60,8 @@ export default function Chat_firebase(props) {
             orderBy("send_time"),
             limit(50)
         );
-        console.log('USER ACTIVE')
-        console.log(userActive)
+        //console.log('USER ACTIVE')
+        //console.log(userActive)
         const data = onSnapshot(q, (QuerySnapshot) => {
                 let messages = [];
                 QuerySnapshot.forEach((doc) => {
@@ -69,8 +69,8 @@ export default function Chat_firebase(props) {
                     datt.send_time=new Date(doc.data().send_time.seconds*1000)
                     messages.push({ ...datt, id: doc.id });
                 });
-                console.log('MES MSGS RECUS') 
-                console.log(messages)   
+                //console.log('MES MSGS RECUS') 
+                //console.log(messages)   
                 const q1 = query(
                     collection(db, "messages"),
                     where('sender_id','==',moiii.id),
@@ -80,7 +80,7 @@ export default function Chat_firebase(props) {
                 );
                 const data1 = onSnapshot(q1, (QuerySnapshot) => {
                     let messages1 = [];
-                    console.log(QuerySnapshot)
+                    //console.log(QuerySnapshot)
                     QuerySnapshot.forEach((doc) => {
                         let datt=doc.data()
                         datt.send_time=new Date(doc.data().send_time.seconds*1000)
@@ -92,7 +92,7 @@ export default function Chat_firebase(props) {
                     const sortedAsc = mess.sort(
                         (objA, objB) => Number(objA.send_time) - Number(objB.send_time),
                     );
-                    console.log(sortedAsc)
+                    //console.log(sortedAsc)
                     setMessages(sortedAsc)
                 });
                 //setMessages(messages)          
@@ -112,7 +112,7 @@ export default function Chat_firebase(props) {
     
     useEffect(() => {
         const moiii=JSON.parse(localStorage.getItem("user"))[0]
-        setUser(JSON.parse(localStorage.getItem("user"))[0])                
+        //setUser(JSON.parse(localStorage.getItem("user"))[0])                
         if(userChatActive.id){
             getChatActiveMessage(userChatActive.id)
         }  
@@ -140,7 +140,7 @@ export default function Chat_firebase(props) {
         //console.log(q)
         const data = onSnapshot(q, (QuerySnapshot) => {
                 let message = [];
-                console.log(QuerySnapshot)
+                //console.log(QuerySnapshot)
                 QuerySnapshot.forEach((doc) => {
                     let datt=doc.data()
                     datt.send_time=new Date(doc.data().send_time.seconds*1000)
@@ -194,7 +194,10 @@ export default function Chat_firebase(props) {
             //uid
         };
         addDoc(collection(db, "messages"), msg);        
-        
+        nbMsg1=nbMsg1+1
+        if(nbMsg1>=limitMsg){
+            setCheckAbo(1)
+        }
     };
 
     const handleEnterKey = async (e) => {

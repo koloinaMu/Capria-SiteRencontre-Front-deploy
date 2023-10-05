@@ -2,6 +2,9 @@
 import Chat_firebase from './Chat_firebase'
 import {useState,useEffect,Component} from 'react'
 import api from '../const/api'
+import {  db } from "../firebase";
+import { collection, addDoc, serverTimestamp, query, limit, orderBy, onSnapshot, where, Query,Timestamp } from "firebase/firestore";
+
 
 export class Chat extends Component{
 
@@ -44,7 +47,7 @@ export class Chat extends Component{
             myHeaders.append("Accept", "application/json");
             const objNb={sender_id:this.state.user.id,date_debut:aboJson.date_debut}
             const objString=JSON.stringify(objNb)
-            fetch(api("messages/nbMsg"), {
+            /*fetch(api("messages/nbMsg"), {
                 headers: myHeaders,
                 method:'POST',
                 body:objString
@@ -66,7 +69,36 @@ export class Chat extends Component{
                     console.log(check)
                     localStorage.setItem('checkAbo',check)
                 })
-            })
+            })*/
+            const uss=JSON.parse(localStorage.getItem('user'))[0]
+            //console.log(Timestamp.fromDate(new Date(aboJson.date_debut)))
+            
+            const q1 = query(
+                collection(db, "messages"),
+                where('sender_id','==',uss.id),
+                where('send_time','>=',new Date(aboJson.date_debut)),
+                where('send_time','<=',new Date(aboJson.date_fin))
+            );
+            //console.log(q1)
+            const data1 = onSnapshot(q1, (QuerySnapshot) => {
+                let messages1 = [];
+                QuerySnapshot.forEach((doc) => {
+                    messages1.push({ ...doc.data(), id: doc.id });
+                });
+                const nb=messages1.length
+                this.setState({nbMsg:nb})
+                localStorage.setItem('nbMsg',nb)
+                var check=0
+                //console.log('NB MSG INIT')
+                //console.log(nb)
+                //console.log(limitMsg)
+                if(nb>=limitMsg){
+                    this.setState({checkAbo:false})
+                    check=1
+                }
+                //console.log(check)           
+                localStorage.setItem('checkAbo',check)
+            });
         }
         var obj={'id':this.state.user.id,'filtres':[]}
         //console.log(obj)
