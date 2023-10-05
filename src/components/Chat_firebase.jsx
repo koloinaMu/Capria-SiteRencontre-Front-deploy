@@ -30,34 +30,15 @@ export default function Chat_firebase(props) {
     const messagesEndRef = useRef(null)
     const msgCardBodyRef = useRef(null)
 
-    const socket = io(api(''),{
+    /*const socket = io(api(''),{
         reconnection: true
       });
-      useEffect(() => {          
-        /*const q = query(
-          collection(db, "messages"),
-          where('receiver_id=='+userChatActive.id),
-          orderBy("createdAt"),
-          limit(50)
-        );
-        const data = onSnapshot(q, (QuerySnapshot) => {
-              let messages = [];
-              QuerySnapshot.forEach((doc) => {
-                messages.push({ ...doc.data(), id: doc.id });
-              });
-              setMessages(messages)
-              console.log(messages) 
-          
-        });
-        //return () => data; */
-   
-    }, [props.chatActive]);
-
+    */
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
 
-    socket.on('SERVER_MSG', msg => {
+    /*socket.on('SERVER_MSG', msg => {
         if(msg.receiver_id == user?.id && msg.sender_id == userChatActive.id) {
             const newMsg = {
                 sender_id: msg.sender_id,
@@ -68,19 +49,55 @@ export default function Chat_firebase(props) {
             setMessages(messages.concat([newMsg]));
             // console.log('misy message pr iny kindindrenty a', test);
         }
-    })
+    })*/
 
-    const getChatActiveMessage = (userActive) => {
+    const getChatActiveMessage = (userActive) => {  
+        const moiii=JSON.parse(localStorage.getItem("user"))[0]              
+        const q = query(
+            collection(db, "messages"),
+            where('sender_id','==',userActive),
+            where('receiver_id','==',moiii.id),
+            orderBy("send_time"),
+            limit(50)
+        );
+        console.log('USER ACTIVE')
+        console.log(userActive)
+        const data = onSnapshot(q, (QuerySnapshot) => {
+                let messages = [];
+                QuerySnapshot.forEach((doc) => {
+                    let datt=doc.data()
+                    datt.send_time=new Date(doc.data().send_time.seconds*1000)
+                    messages.push({ ...datt, id: doc.id });
+                });
+                console.log('MES MSGS RECUS') 
+                console.log(messages)   
+                const q1 = query(
+                    collection(db, "messages"),
+                    where('sender_id','==',moiii.id),
+                    where('receiver_id','==',userActive),
+                    orderBy("send_time"),
+                    limit(50)
+                );
+                const data1 = onSnapshot(q1, (QuerySnapshot) => {
+                    let messages1 = [];
+                    console.log(QuerySnapshot)
+                    QuerySnapshot.forEach((doc) => {
+                        let datt=doc.data()
+                        datt.send_time=new Date(doc.data().send_time.seconds*1000)
+                        messages1.push({ ...datt, id: doc.id });
+                    });
+                    /*setMessages(messages)*/
+                    //console.log('MES MSGS ALL') 
+                    const mess=(messages1.concat(messages))
+                    const sortedAsc = mess.sort(
+                        (objA, objB) => Number(objA.send_time) - Number(objB.send_time),
+                    );
+                    console.log(sortedAsc)
+                    setMessages(sortedAsc)
+                });
+                //setMessages(messages)          
+        });
         
-        fetch(api('messages'), {
-            headers: {"Content-Type": "application/json"},
-            method: "POST",
-            body: JSON.stringify({'mon_id': props.user.id, 'receiver_id': userActive})
-        }).then((res) => {
-            res.json().then((res) => {
-                setMessages(res);
-            })
-        })
     }
     
     const setActive = (e, user) => {
@@ -95,63 +112,45 @@ export default function Chat_firebase(props) {
     
     useEffect(() => {
         const moiii=JSON.parse(localStorage.getItem("user"))[0]
-        setUser(JSON.parse(localStorage.getItem("user"))[0])        
-        //if(userChatActive.id){
-            //console.log(localStorage.getItem('userChatActive'))
-            //setUserChatActive(JSON.parse(localStorage.getItem('userChatActive')))
-            //getChatActiveMessage(props.chatActive.id)       
-            //console.log('CHAT ACTIVE')
-            //console.log(props.chatActive)                      
-            //console.log(userChatActive) 
-        console.log(userChatActive.id)
-        console.log(userChatActive.id)
+        setUser(JSON.parse(localStorage.getItem("user"))[0])                
         if(userChatActive.id){
-            console.log('K ZAY VAO MISY')
-            const q = query(
-                collection(db, "messages"),
-                where('receiver_id','==',userChatActive.id),
-                orderBy("send_time"),
-                limit(50)
-            );
-            console.log(q)
-            const data = onSnapshot(q, (QuerySnapshot) => {
-                    let messages = [];
-                    console.log(QuerySnapshot)
-                    QuerySnapshot.forEach((doc) => {
-                    messages.push({ ...doc.data(), id: doc.id });
-                    });
-                    setMessages(messages)
-                    console.log('MES MSGS ENVOYES') 
-                    console.log(messages) 
-                
-            });
+            getChatActiveMessage(userChatActive.id)
         }  
-        console.log('MON ID')
+        //console.log('MON ID')
+        
+    },[props.chatActive]);
+
+    useEffect(() => {                       
+        if(userChatActive.id){
+            receiveMessage()
+        }  
+        //console.log('MON ID')
+        
+    },[props.chatActive]);
+
+    const receiveMessage = () =>{
+        const moiii=JSON.parse(localStorage.getItem("user"))[0]
         const q = query(
             collection(db, "messages"),
             where('receiver_id','==',moiii.id),
+            where('sender_id','==',userChatActive.id),
             orderBy("send_time"),
-            limit(50)
+            limit(1)
         );
-        console.log(q)
+        //console.log(q)
         const data = onSnapshot(q, (QuerySnapshot) => {
-                let messages = [];
+                let message = [];
                 console.log(QuerySnapshot)
                 QuerySnapshot.forEach((doc) => {
-                messages.push({ ...doc.data(), id: doc.id });
+                    let datt=doc.data()
+                    datt.send_time=new Date(doc.data().send_time.seconds*1000)
+                    message.push({ ...datt, id: doc.id });
                 });
-                setMessages(messages)
-                console.log('MES MESSAGES RECUS') 
-                console.log(messages) 
-            
+                setMessages(messages.concat(message))
+                //console.log('MES MESSAGES RECUS') 
+                //console.log(messages)             
         });
-            /*if(userChatActive.id){
-                getChatActiveMessage(userChatActive.id)
-            } */
-        //}
-        // scrollToBottom();
-    },[props.chatActive]);
-
+    }
 
     useEffect(() => {
         scrollToBottom();
@@ -182,51 +181,19 @@ export default function Chat_firebase(props) {
         if (msgCardBodyRef.current) {
             msgCardBodyRef.current.scrollTop = msgCardBodyRef.current.scrollHeight;
         }
-        //console.log('abonnement[0]')
-        //console.log(abonnement)
-        /*const msg = {
-            sender_id: props.user.id,
-            receiver_id: userChatActive.id,
-            //receiver_id: userChatActive1.id,
-            message: yourMessage,
-            send_time: new Date(),
-            date_debut: abonnement.date_debut
-        };*/
-        console.log('AUTH')
-        console.log(auth)
+        //console.log('AUTH')
+        //console.log(auth)
         //const { uid } = auth.currentUser;
         const msg = {
             sender_id: props.user.id,
             receiver_id: userChatActive.id,
             //receiver_id: userChatActive1.id,
             message: yourMessage,
-            send_time: serverTimestamp(),
+            send_time: new Date(),
             date_debut: abonnement.date_debut,
             //uid
         };
-        addDoc(collection(db, "messages"), msg).then(()=>alert('Message envoye'));
-        /*socket.emit('CLIENT_MSG', msg);
-        
-        setMessages(messages.concat([msg]))
-        //console.log(messages)
-
-        socket.on('SERVER_MSG', msg => {
-            nbMsg1=nbMsg1+1
-            if(nbMsg1>=limitMsg){
-                setCheckAbo(1)
-            }
-            if(msg.erreur && msg.sender_id==props.user.id){
-                setCheckAbo(1)
-            }else if(msg.limite && msg.sender_id==props.user.id){
-                setCheckAbo(1)
-                // getChatActiveMessage(msg.receiver_id)
-                // setMessages([...messages, msg]);
-            }
-            // else{
-            //     setMessages([...messages, msg]);
-            //     getChatActiveMessage(msg.receiver_id)
-            // }
-        });*/
+        addDoc(collection(db, "messages"), msg);        
         
     };
 
