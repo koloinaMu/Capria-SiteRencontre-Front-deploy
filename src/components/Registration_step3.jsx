@@ -2,6 +2,7 @@ import { Component } from 'react';
 import api from "../const/api";
 import Cookies from 'js-cookie';
 //var faceapi='../../public/js/face-api.js'
+import {Buffer} from 'buffer';
 
 const ImgUpload =({
     onChange,
