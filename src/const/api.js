@@ -1,5 +1,5 @@
 function api(query) {
-    return "capria-siterencontre-back.railway.internal/"+query
+    return "https://capria-date-back.onrender.com/"+query
 }
 
 export default api
