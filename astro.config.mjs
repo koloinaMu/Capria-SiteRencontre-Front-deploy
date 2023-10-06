@@ -9,10 +9,10 @@ export default defineConfig({
   output:'hybrid',
   /*adapter: netlify({}),*/
   adapter: netlify({}),
-  /*experimental: {
+  experimental: {
     redirects: true
   },
   redirects: {
     '/': '/landing'
-  }*/
+  }
 });
