@@ -14,6 +14,7 @@ export default function Login() {
         .toLowerCase()
         .match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/);*/
         const res='ok foana'
+        //const res='ok foana'
         //var txt='ertyr.00@oiur.fr';
         //console.log(String(txt).match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/));
         //console.log(res);
