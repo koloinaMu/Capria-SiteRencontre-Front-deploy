@@ -4,11 +4,11 @@ import Page from '../components/Page.astro';
 import AssistanceComponent from '../components/assistance';
 import api from '../const/api';
 
-    const res = await fetch(api("users/admin"), {
+    /*const res = await fetch(api("users/admin"), {
         headers: {"Content-Type": "application/json"},
         method: "GET"
     })
-    const [admin] = await res.json();
+    const [admin] = await res.json();*/
     
 ---
 
@@ -22,6 +22,6 @@ import api from '../const/api';
     <link rel="stylesheet" type="text/css" href="css/chat.css">
     <!-- <div class="container-fluid h-100"> -->
         <NavBar client:load />
-        <AssistanceComponent admin={admin} client:load/>
+        <!--<AssistanceComponent admin={admin} client:load/>-->
     <!-- </div> -->
 </Page>
