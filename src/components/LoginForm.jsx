@@ -24,6 +24,8 @@ export default function Login() {
             myHeaders.append("Accept", "application/json");
 
             //console.log(jsonString);
+            
+        console.log('email')
             const response = await fetch(api("login"), {
                 headers: myHeaders,
                 method:'POST',
@@ -31,6 +33,7 @@ export default function Login() {
             });
             //console.log(await response.text());
             const reponse = await response.json();
+            console.log('response login')
             //console.log(reponse)
             if(reponse.erreur==undefined){
                 //console.log('reponse non erreur');
