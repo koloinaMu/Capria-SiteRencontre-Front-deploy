@@ -8,6 +8,7 @@ import { getFirestore } from "firebase/firestore";
 //console.log('API KEY')
 //console.log(import.meta.env)
 //console.log(import.meta.env.VITE_REACT_APP_API_KEY)
+console.log(import.meta.env)
 const firebaseConfig = {
 	apiKey: import.meta.env.PUBLIC_VITE_REACT_APP_API_KEY,
 	authDomain: import.meta.env.PUBLIC_VITE_REACT_APP_AUTH_DOMAIN,
