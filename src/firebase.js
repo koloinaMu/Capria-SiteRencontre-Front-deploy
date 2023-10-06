@@ -10,13 +10,13 @@ import { getFirestore } from "firebase/firestore";
 //console.log(import.meta.env.VITE_REACT_APP_API_KEY)
 console.log(import.meta.env)
 const firebaseConfig = {
-	apiKey: import.meta.env.PUBLIC_VITE_REACT_APP_API_KEY,
-	authDomain: import.meta.env.PUBLIC_VITE_REACT_APP_AUTH_DOMAIN,
-	projectId: import.meta.env.PUBLIC_VITE_REACT_APP_PROJECT_ID,
-	storageBucket: import.meta.env.PUBLIC_VITE_REACT_APP_STORAGE_BUCKET,
-	messagingSenderId: import.meta.env.PUBLIC_VITE_REACT_APP_MESSAGING_SENDER_ID,
-	appId: import.meta.env.PUBLIC_VITE_REACT_APP_APP_ID,
-	measurementId: import.meta.env.PUBLIC_VITE_REACT_APP_MEASUREMENT_ID,
+	apiKey: 'AIzaSyDwqHjM_lNxdNSdqwRpSSgPQyG-9-K437Q', // import.meta.env.PUBLIC_VITE_REACT_APP_API_KEY,
+	authDomain: 'chat-6f94e.firebaseapp.com', //import.meta.env.PUBLIC_VITE_REACT_APP_AUTH_DOMAIN,
+	projectId: 'chat-6f94e', // import.meta.env.PUBLIC_VITE_REACT_APP_PROJECT_ID,
+	storageBucket: 'chat-6f94e.appspot.com', //import.meta.env.PUBLIC_VITE_REACT_APP_STORAGE_BUCKET,
+	messagingSenderId: '586279433961', //import.meta.env.PUBLIC_VITE_REACT_APP_MESSAGING_SENDER_ID,
+	appId: '1:586279433961:web:ea689cd23880d227152278', //import.meta.env.PUBLIC_VITE_REACT_APP_APP_ID,
+	measurementId: 'G-YDXLD2HE4C' //import.meta.env.PUBLIC_VITE_REACT_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
