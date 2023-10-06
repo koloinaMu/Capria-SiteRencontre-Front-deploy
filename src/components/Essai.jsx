@@ -6,7 +6,7 @@ import api from "../const/api";
 function Essai(userInfo) {
   const [messages, setMessages] = useState(userInfo.messagesAvant); 
 
-  const socket = io(api(''));
+  const socket = io("https://capria-date-back.onrender.com");
   //console.log(userInfo.messagesAvant)
   const user=JSON.parse(userInfo.userInfo)
 

@@ -10,11 +10,9 @@ export default function Login() {
 
     const log = async()=>{
         console.log(email)
-        /*var res=String(email)
+        var res=String(email)
         .toLowerCase()
-        .match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/);*/
-        const res='ok foana'
-        //const res='ok foana'
+        .match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/);
         //var txt='ertyr.00@oiur.fr';
         //console.log(String(txt).match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/));
         //console.log(res);
@@ -26,8 +24,6 @@ export default function Login() {
             myHeaders.append("Accept", "application/json");
 
             //console.log(jsonString);
-            
-        console.log('email')
             const response = await fetch(api("login"), {
                 headers: myHeaders,
                 method:'POST',
@@ -35,7 +31,6 @@ export default function Login() {
             });
             //console.log(await response.text());
             const reponse = await response.json();
-            console.log('response login')
             //console.log(reponse)
             if(reponse.erreur==undefined){
                 //console.log('reponse non erreur');

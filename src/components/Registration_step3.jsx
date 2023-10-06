@@ -2,7 +2,6 @@ import { Component } from 'react';
 import api from "../const/api";
 import Cookies from 'js-cookie';
 //var faceapi='../../public/js/face-api.js'
-import {Buffer} from 'buffer';
 
 const ImgUpload =({
     onChange,
@@ -10,7 +9,7 @@ const ImgUpload =({
   })=>
     <label htmlFor="profile_picture" className="custom-file-upload fas">
       <div className="img-wrap img-upload" >
-        <img htmlFor="profile_picture" src={src}/>
+        <img htmlFor="profile_picture" src={'/'+src}/>
       </div>
       <input id="profile_picture" name='profile_picture' type="file" onChange={onChange}/> 
     </label>
@@ -165,7 +164,7 @@ export class Registation_step3 extends Component {
             <>
                 <h2 className="fw-bold mb-5">Photo de profile</h2>
                 <div>
-                    <ImgUpload onChange={photoUpload} src={profile_picture} value={values.profile_picture}/>
+                    <ImgUpload onChange={photoUpload} src={'/'+profile_picture} value={values.profile_picture}/>
                     <br/>
                     { errorPdp && <span className='error'>Image invalide. Elle ne contient pas de visage ou est une photo de groupe.</span> }
                     {/* Submit button */}

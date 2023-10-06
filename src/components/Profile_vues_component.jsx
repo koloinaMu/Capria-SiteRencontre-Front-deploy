@@ -18,7 +18,7 @@ export default function Profile_vues_component(props){
                     //console.log(profil.pseudo);
                     <tr>
                         <td className="pb-2 w-50">
-                            <img id="imgVue" src={profil.photoDeProfil} alt="IMG-PRODUCT"/>
+                            <img id="imgVue" src={'/'+profil.photoDeProfil} alt="IMG-PRODUCT"/>
                         </td>
                         <td className="text-left"><span className="stext-102 cl6 size-206">{profil.pseudo}</span></td>
                     </tr>

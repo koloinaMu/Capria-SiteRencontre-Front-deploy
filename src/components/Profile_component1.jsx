@@ -104,7 +104,7 @@ export class Profile_component1 extends Component{
                     <div className="container">
                         <div className="p-t-33">
                             <div className="profile-pic-div bg-dark">
-                                <img src={this.state.user.photoDeProfil} id="imgPhoto"  />                                
+                                <img src={'/'+this.state.user.photoDeProfil} id="imgPhoto"  />                                
                             </div>
                             <div className="mt-4">
                                 <h2 className="text-center">{this.state.user.pseudo}</h2>

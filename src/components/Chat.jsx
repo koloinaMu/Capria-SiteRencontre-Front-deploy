@@ -28,10 +28,9 @@ export default function Chat(props) {
     const messagesEndRef = useRef(null)
     const msgCardBodyRef = useRef(null)
 
-    const socket = io(api(''),{
-        reconnection: true
-      });
+    const socket = io("https://capria-date-back.onrender.com");
 
+      
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
@@ -222,7 +221,7 @@ export default function Chat(props) {
                                                 <li className={userChatActive.id == u.id ? "active" : "notActive"} key={u.id} style={{cursor: "pointer"}} onClick={e => setActive(e, u)}>
                                                 <div className="d-flex bd-highlight">
                                                     <div className="img_cont">
-                                                        <img src={u.photoDeProfil} className="rounded-circle user_img" />
+                                                        <img src={'/'+u.photoDeProfil} className="rounded-circle user_img" />
                                                         <span className="online_icon"></span>
                                                     </div>
                                                     <div className="user_info">
@@ -244,8 +243,8 @@ export default function Chat(props) {
                                 <div className="card-header msg_head">
                                     <div className="d-flex bd-highlight">
                                         <div className="img_cont">
-                                            {/*<img src={userChatActive.photoDeProfil} className="rounded-circle user_img" />*/}
-                                            <img src={userChatActive.photoDeProfil} className="rounded-circle user_img" />
+                                            {/*<img src={'/'+userChatActive.photoDeProfil} className="rounded-circle user_img" />*/}
+                                            <img src={'/'+userChatActive.photoDeProfil} className="rounded-circle user_img" />
                                             <span className="online_icon"></span>
                                         </div>
                                         <div className="user_info">
@@ -284,15 +283,15 @@ export default function Chat(props) {
                                                         <span key={'time'+msg.id} className="msg_time_send" style={{whiteSpace: "nowrap"}}>{("0"+messageDate.getHours()).slice(-2)}:{("0"+messageDate.getMinutes()).slice(-2)}, {messageDate.toLocaleDateString('en-US') == new Date().toLocaleDateString('en-US') ? "Aujourd'hui" : messageDate.getDay()+' '+months[messageDate.getMonth()]}</span>
                                                     </div>
                                                     <div key={"img"+msg.id} className="img_cont_msg">
-                                                        <img src={props.user.photoDeProfil} className="rounded-circle user_img_msg"/>
+                                                        <img src={'/'+props.user.photoDeProfil} className="rounded-circle user_img_msg"/>
                                                     </div>
                                                 </div>
                                             )
                                         } else return (
                                             <div key={msg.id} className="d-flex justify-content-start mb-4">
                                                 <div key={"img"+msg.id} className="img_cont_msg">
-                                                    {/*<img src={userChatActive.photoDeProfil} className="rounded-circle user_img_msg" />*/}
-                                                    <img src={userChatActive.photoDeProfil} className="rounded-circle user_img_msg" />
+                                                    {/*<img src={'/'+userChatActive.photoDeProfil} className="rounded-circle user_img_msg" />*/}
+                                                    <img src={'/'+userChatActive.photoDeProfil} className="rounded-circle user_img_msg" />
                                                 </div>
                                                 <div key={"msg"+msg.id} className="msg_cotainer">
                                                     {traduction(msg.message)}

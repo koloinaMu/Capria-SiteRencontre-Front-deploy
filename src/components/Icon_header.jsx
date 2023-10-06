@@ -7,18 +7,12 @@ export default function Icon_header() {
 
 	const [disconnect, setDisconnect] = useState(false);
 
-    const socket = io(api(''));
+    const socket = io("https://capria-date-back.onrender.com");
     
     useEffect(() => {
-        socket.on('connect', () => {
-            // socket.on('getNotification', data => {
-            //     // setNotifications((prev) => [...prev, data])
-            //     console.log('Indreto izahay ', data);
-            // })
-            socket.on('getNotification', data => {
-                console.log('Some notifications ', data);
-            })
-        })
+		socket.on('getNotification', data => {
+			console.log('Some notifications ', data);
+		})
     }, [])
 
 	useEffect(() => {

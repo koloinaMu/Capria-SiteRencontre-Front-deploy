@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import api from '../const/api';
 
 export default function Online_offline(props) {
-    const socket = io(api(''));
+    const socket = io("https://capria-date-back.onrender.com");
 
     const [onlineUsers, setOnlineUsers] = useState()
     // const user=JSON.parse(localStorage.getItem('user'))
@@ -16,17 +16,15 @@ export default function Online_offline(props) {
         // };
         const user = JSON.parse(localStorage.getItem("user"))[0];
 
-        socket.on('connect', function() {
-            socket.emit("client_connect", user.id)
+            socket.emit("client_connect", user.id);
             socket.on('getOnlineUsers', users => {
                 // setOnlineUsers(users)
                 console.log('online_offline', users);
             })
-        })
 
-        socket.on('disconnect', () => {
-            socket.emit("client_disconnect", user.id)
-        })
+        // socket.on('disconnect', () => {
+        //     socket.emit("client_disconnect", user.id)
+        // })
     
         // Tab closed
         // const handleBlur = () => {
