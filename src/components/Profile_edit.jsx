@@ -4,6 +4,8 @@ import api from "../const/api"
 
 export default function Profile_edit(props) {
     //console.log(localStorage.getItem('userProfil'))
+    console.log('USER')
+    console.log(props.user)
     const [pseudo, setPseudo] = useState(props.user.pseudo);
     const [name, setName] = useState(props.user.nom);
     const [firstname, setFirstname] = useState(props.user.prenom);
