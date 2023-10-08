@@ -17,7 +17,7 @@ export default function Assistance(props) {
     const messageAuto = "Bonjour "+user?.nom+"! Nous avons bien reçu votre message hihi";
 
 
-    const socket = io("https://capria-date-back.onrender.com");
+    //const socket = io("https://capria-date-back.onrender.com");
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -99,7 +99,7 @@ export default function Assistance(props) {
             message: yourMessage,
             send_time: new Date()
         };
-        socket.emit('CLIENT_MSG', msg)
+        //socket.emit('CLIENT_MSG', msg)
 
         setMessages(messages.concat([msg]))
 
@@ -121,7 +121,7 @@ export default function Assistance(props) {
         })
 
         const msgAuto = await promise;
-        autoReply && socket.emit('CLIENT_MSG', msgAuto);
+        //autoReply && socket.emit('CLIENT_MSG', msgAuto);
         autoReply && setMessages(messages.concat([msg, msgAuto]))
         
     };

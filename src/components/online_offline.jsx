@@ -16,8 +16,8 @@ export default function Online_offline(props) {
         // };
         const user = JSON.parse(localStorage.getItem("user"))[0];
 
-            socket.emit("client_connect", user.id);
-            socket.on('getOnlineUsers', users => {
+            //socket.emit("client_connect", user.id);
+            //socket.on('getOnlineUsers', users => {
                 // setOnlineUsers(users)
                 console.log('online_offline', users);
             })

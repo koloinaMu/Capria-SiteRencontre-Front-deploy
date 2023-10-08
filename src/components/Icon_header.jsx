@@ -7,13 +7,13 @@ export default function Icon_header() {
 
 	const [disconnect, setDisconnect] = useState(false);
 
-    const socket = io("https://capria-date-back.onrender.com");
+    //const socket = io("https://capria-date-back.onrender.com");
     
-    useEffect(() => {
+    /*useEffect(() => {
 		socket.on('getNotification', data => {
 			console.log('Some notifications ', data);
 		})
-    }, [])
+    }, [])*/
 
 	useEffect(() => {
 		const user = JSON.parse(localStorage.getItem("user"))[0];
@@ -21,7 +21,7 @@ export default function Icon_header() {
 			localStorage.removeItem("user");
 			localStorage.removeItem("abonnement");
 			// socket.on('connect', function() {
-			socket.emit("client_disconnect", user.id);
+			//socket.emit("client_disconnect", user.id);
 			// })
 			window.location.href = '/login'
 		}

@@ -22,7 +22,7 @@ export default function NavBar() {
 			localStorage.removeItem("user");
 			localStorage.removeItem("abonnement");
 			// socket.on('connect', function() {
-				socket.emit("client_disconnect", user.id);
+				//socket.emit("client_disconnect", user.id);
 			// })
 			window.location.href = '/login'
 		}
