@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import api from '../const/api';
 
 export default function Online_offline(props) {
-    const socket = io("https://capria-date-back.onrender.com");
+    //const socket = io("https://capria-date-back.onrender.com");
 
     const [onlineUsers, setOnlineUsers] = useState()
     // const user=JSON.parse(localStorage.getItem('user'))

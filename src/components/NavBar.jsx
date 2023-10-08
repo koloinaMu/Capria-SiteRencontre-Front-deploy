@@ -7,7 +7,7 @@ export default function NavBar() {
 	const [currentPage, setCurrentPage] = useState();
 	const [user, setUser] = useState();
 
-	const socket = io("https://capria-date-back.onrender.com");
+	//const socket = io("https://capria-date-back.onrender.com");
 
 	const [disconnect, setDisconnect] = useState(false);
 
