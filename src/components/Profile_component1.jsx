@@ -47,6 +47,8 @@ export class Profile_component1 extends Component{
         var current_user=JSON.parse(localStorage.getItem('user'))[0]
         current_user=current_user.id
         this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
+        console.log(current_user.id)
+        console.log(this.state.visitedId)
         if(this.state.visitedId!=current_user){
             fetch(api('users/id/'+this.state.visitedId)).then((response) =>{
                 response.json().then((res)=>{
