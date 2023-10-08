@@ -4,7 +4,7 @@ import api from '../const/api';
 
 export default function Profile_component(props) {
 
-    const socket = io("https://capria-date-back.onrender.com");
+    //const socket = io("https://capria-date-back.onrender.com");
 
     
     useEffect(() => {
@@ -16,7 +16,7 @@ export default function Profile_component(props) {
             type: 1
         };
         // socket.on('connect', () => {
-            socket.emit('sendNotification', data);
+            //socket.emit('sendNotification', data);
             // socket.on('getOnlineUsers', users => {
             //     console.log(users);
             // })
