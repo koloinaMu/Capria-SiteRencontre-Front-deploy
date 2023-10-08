@@ -90,7 +90,7 @@ export class Profile_component1 extends Component{
             })
         })
     }
-    componentDidMount(){
+    componentWillMount(){
         this.initialisation()
         //console.log('add user profil')
         //console.log(this.state.user)
