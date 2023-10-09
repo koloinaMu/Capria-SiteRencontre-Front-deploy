@@ -111,7 +111,7 @@ export class Profile_component1 extends Component{
             })
         })
     }
-    componentDidMount(){
+    componentWillMount(){
         this.initialisation()
     }
     /*componentDidUpdate(){
