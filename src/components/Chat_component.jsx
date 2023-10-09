@@ -3,6 +3,7 @@ import Chat_firebase from './Chat_firebase'
 import {useState,useEffect,Component} from 'react'
 import api from '../const/api'
 import {  db } from "../firebase";
+import Cookies from 'js-cookie'
 import { collection, addDoc, serverTimestamp, query, limit, orderBy, onSnapshot, where, Query,Timestamp } from "firebase/firestore";
 
 
@@ -115,9 +116,9 @@ export class Chat extends Component{
                 /*users=(res)
                 chatActive=(users[0])*/
                 var active=res[0]
-                
-                if(this.props.idChatActive!='null'){
-                    const idChatActive=this.props.idChatActive
+                const idChatActive=Cookies.get('idChatActive')
+                if(idChatActive!='null'){
+                    //const idChatActive=this.props.idChatActive
                     if(res.findIndex(i => i.id==idChatActive) > -1){
                         //chatActive=users.filter(i => i.id == idChatActive)[0]
                         //chatActive=(users.filter(i => i.id == idChatActive)[0])

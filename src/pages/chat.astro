@@ -67,7 +67,8 @@
     var idChatActive='null'
     const val=Astro.url.searchParams.get('id')
     if(val){   
-      idChatActive=val      
+      idChatActive=val
+      Astro.cookies.set('idChatActive',idChatActive)
     }
     
 ---
