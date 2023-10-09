@@ -111,19 +111,19 @@ export class Profile_component1 extends Component{
             })
         })
     }
-    componentWillMount(){
-        this.initialisation()
+    componentDidMount(){
+        if(this.props.visitedId){
+            console.log('VISITEDID')
+            console.log(this.props.visitedId)
+            this.initialisation()
+        }
+        //alert('WILL MOUNT')
     }
     /*componentDidUpdate(){
         this.initialisation()        
     }*/
 
-    render(){
-        console.log('VISITEDID')
-        console.log(this.state.visitedId)
-        //console.log(this.state.visitedId)
-        console.log(this.state)
-        console.log(this.state.user)        
+    render(){               
         if(this.state.user.id){
             return(
                 <>
