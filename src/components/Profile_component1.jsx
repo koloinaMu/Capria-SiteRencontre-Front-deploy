@@ -19,7 +19,9 @@ export class Profile_component1 extends Component{
         super(props)
         this.visitedId=this.props.visitedId
         console.log('CONSTRUCTEURRRR')
-        console.log(this.visitedId)
+        //console.log(this.visitedId)
+        console.log(this)
+        console.log(this.props)
         /*this.state ={
             user:{},
             visitedId:this.props.visitedId,
@@ -28,6 +30,7 @@ export class Profile_component1 extends Component{
             nbVue:0,
             choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
         }*/
+        console.log(this.props.visitedId)
         this.initialisation(this.visitedId)
     }
     state ={
