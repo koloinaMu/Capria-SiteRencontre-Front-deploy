@@ -191,7 +191,7 @@ export class Profile_component1 extends Component{
     
                 </>
             )   
-        }        
+        }else(this.render())       
     }
 }
 
