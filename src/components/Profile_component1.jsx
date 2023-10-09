@@ -104,16 +104,14 @@ export class Profile_component1 extends Component{
     }
     componentWillMount(){
         this.initialisation()
-        //console.log('add user profil')
-        //console.log(this.state.user)
-        //console.log(this.state.moi)
-        //console.log(localStorage.getItem('moi'))
-        //console.log(localStorage.getItem('userProfil'))
     }
+    /*componentDidUpdate(){
+        this.initialisation()        
+    }*/
 
     render(){
         console.log('VISITEDID')
-        console.log(this.props.visitedId)
+        console.log(this.state.visitedId)
         console.log(this.state)
         if(this.props.visitedId){
             return(
