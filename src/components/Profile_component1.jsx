@@ -56,6 +56,7 @@ export class Profile_component1 extends Component{
         console.log(current_user)
         console.log(current_user.id)
         console.log(this.state.visitedId)
+        console.log(this.props.visitedId)
         if(this.state.visitedId!=current_user){
             fetch(api('users/id/'+this.state.visitedId)).then((response) =>{
                 response.json().then((res)=>{
@@ -111,6 +112,8 @@ export class Profile_component1 extends Component{
     }
 
     render(){
+        console.log('VISITEDID')
+        console.log(this.props.visitedId)
         return(
             <>
                 {this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />}
