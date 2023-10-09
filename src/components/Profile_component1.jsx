@@ -17,14 +17,22 @@ export class Profile_component1 extends Component{
 
     constructor(props){
         super(props)
-        this.state ={
+        /*this.state ={
             user:{},
             visitedId:this.props.visitedId,
             vues:[],
             moi:0,
             nbVue:0,
             choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
-        }
+        }*/
+    }
+    state ={
+        user:{},
+        visitedId:this.props.visitedId,
+        vues:[],
+        moi:0,
+        nbVue:0,
+        choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
     }
 
     user={}
