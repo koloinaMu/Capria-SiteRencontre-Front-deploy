@@ -114,6 +114,7 @@ export class Profile_component1 extends Component{
     render(){
         console.log('VISITEDID')
         console.log(this.props.visitedId)
+        console.log(this.state)
         return(
             <>
                 {this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />}
