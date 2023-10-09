@@ -119,11 +119,11 @@ export class Profile_component1 extends Component{
         console.log('VISITEDID')
         console.log(this.props.visitedId)
         console.log(this.visitedId)
-        if(this.visitedId){
-            console.log('VISITEDID')
-            console.log(this.props.visitedId)
+        //if(this.visitedId){
+            //console.log('VISITEDID')
+            //console.log(this.props.visitedId)
             this.initialisation(this.visitedId)
-        }
+        //}
         //alert('WILL MOUNT')
     }
     /*componentDidUpdate(){
