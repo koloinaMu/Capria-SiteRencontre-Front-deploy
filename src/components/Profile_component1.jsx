@@ -128,7 +128,7 @@ export class Profile_component1 extends Component{
     }*/
 
     render(){               
-        if(this.state.user.id){
+        //if(this.state.user.id){
             return(
                 <>
                     {this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />}
@@ -205,7 +205,7 @@ export class Profile_component1 extends Component{
     
                 </>
             )   
-        }//else(this.render())       
+        //}//else(this.render())       
     }
 }
 
