@@ -51,12 +51,13 @@ export class Profile_component1 extends Component{
     initialisation = ()=>{
         var current_user=JSON.parse(localStorage.getItem('user'))[0]
         current_user=current_user.id
-        this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
+        //this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
         console.log(localStorage.getItem('user'))
         console.log(current_user)
         console.log(current_user.id)
         console.log(this.state.visitedId)
         console.log(this.props.visitedId)
+        console.log(this.state.visitedId!=current_user)
         if(this.state.visitedId!=current_user){
             fetch(api('users/id/'+this.state.visitedId)).then((response) =>{
                 response.json().then((res)=>{
@@ -102,7 +103,7 @@ export class Profile_component1 extends Component{
             })
         })
     }
-    componentWillMount(){
+    componentDidMount(){
         this.initialisation()
     }
     /*componentDidUpdate(){
@@ -114,7 +115,8 @@ export class Profile_component1 extends Component{
         console.log(this.state.visitedId)
         //console.log(this.state.visitedId)
         console.log(this.state)
-        if(this.state.visitedId){
+        console.log(this.state.user)
+        if(this.state.user.id){
             return(
                 <>
                     {this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />}
@@ -191,7 +193,7 @@ export class Profile_component1 extends Component{
     
                 </>
             )   
-        }else(this.render())       
+        }//else(this.render())       
     }
 }
 
