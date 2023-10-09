@@ -1,5 +1,4 @@
-
-//import ProfileAbout from '../components/Profile_about.jsx'
+import {useEffect, useReducer} from 'react'
 import Profile_about_component from '../components/Profile_about_component'
 //import ProfileAccount from '../components/Profile_Account.astro'
 import Profile_account_component from '../components/Profile_account_component'
@@ -10,29 +9,39 @@ import api from "../const/api"
 import Profile_vues_component from '../components/Profile_vues_component'
 import UpdatePassword from '../components/Update_password'
 import ProfileComponent from '../components/Profile_component'
-import {Component} from 'react'
 import './profile.css'
 
-export class Profile_component1 extends Component{
-
-    constructor(props){
-        super(props)
-        this.state ={
-            user:{},
-            visitedId:this.props.visitedId,
-            vues:[],
-            moi:0,
-            nbVue:0,
-            choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
-        }
+export default function ProfileComponent2 (props) {
+    const visitedId=props.visitedId
+    const state ={
+        user:{},
+        visitedId:props.visitedId,
+        vues:[],
+        moi:0,
+        nbVue:0,
+        choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
     }
+    const reduceState = (state,action) =>{
+        if(action.type=='user'){
+            return {user:action.user}
+        }
+        else if(action.type=='visitedId'){
+            return {visitedId:action.visitedId}
+        }else if(action.type=='vues'){
+            return {vues:action.vues}
+        }else if(action.type=='moi'){
+            return {moi:action.moi}
+        }else if(action.type=='nbVue'){
+            return {nbVue:action.nbVue}
+        }else if(action.type=='choixOrientation'){
+            return {choixOrientation:action.choixOrientation}
+        }else
+            return
+    }
+    const [stateChange,dispatch]=useReducer(reduceState,state)
+    //console.log(stateChange)
 
-    user={}
-    moi=0
-    orientation={}
-    vues=[]
-    
-    setOrientation = (gender,sexualOrientation) =>{
+    const setOrientation = (gender,sexualOrientation) =>{
         var defaultOp='Heterosexuel'
         var defaultVal=sexualOrientation
         var autrOpt='Homosexuel'
@@ -48,28 +57,28 @@ export class Profile_component1 extends Component{
         //console.log(defaultOpt)
     }
 
-    initialisation = ()=>{
+    const initialisation = ()=>{
         var current_user=JSON.parse(localStorage.getItem('user'))[0]
         current_user=current_user.id
-        this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
+        //this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
         console.log(localStorage.getItem('user'))
         console.log(current_user)
         console.log(current_user.id)
-        console.log(this.state.visitedId)
-        if(this.state.visitedId!=current_user){
-            fetch(api('users/id/'+this.state.visitedId)).then((response) =>{
+        //console.log(this.state.visitedId)
+        if(visitedId!=current_user){
+            fetch(api('users/id/'+visitedId)).then((response) =>{
                 response.json().then((res)=>{
-                    this.setState({user:res[0]})
-                    this.user=res[0]
-                    const ori=this.setOrientation(res[0].sexe,res[0].orientationSxl)
-                    this.setState({choixOrientation:ori})
-                    this.orientation=ori
+                    dispatch({type:'user',user:res[0]})
+                    //this.setState({user:res[0]})
+                    const ori=setOrientation(res[0].sexe,res[0].orientationSxl)
+                    //this.setState({choixOrientation:ori})
+                    dispatch({type:'choixOrientation',choixOrientation:ori})
                     console.log(ori)
                     localStorage.setItem('userProfil',JSON.stringify(res[0]))
                     localStorage.setItem('moi',0)
                 })
             });
-            var obj={'visitor_id':current_user,'visited_id':this.state.visitedId}
+            var obj={'visitor_id':current_user,'visited_id':visitedId}
             const jsonString = JSON.stringify(obj);
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -84,46 +93,44 @@ export class Profile_component1 extends Component{
         }else{            
             localStorage.setItem('userProfil',localStorage.getItem('user'))
             localStorage.setItem('moi',1)
-            this.setState({moi:1})
+            //this.setState({moi:1})
             const us=JSON.parse(localStorage.getItem('user'))[0]
-            this.setState({user:us})      
-            this.user=us
-            this.moi=1      
-            const ori=this.setOrientation(us.sexe,us.orientationSxl)
-            this.setState({choixOrientation:ori})
-            this.orientation=ori
+            dispatch({type:'user',user:us})
+            dispatch({type:'moi',moi:1})
+            //this.setState({user:us})            
+            const ori=setOrientation(us.sexe,us.orientationSxl)
+            dispatch({type:'choixOrientation',choixOrientation:ori})
+            //this.setState({choixOrientation:ori})
             console.log(ori)
         }
-        fetch(api('views/visitor/'+this.state.visitedId)).then((response) => {
+        fetch(api('views/visitor/'+visitedId)).then((response) => {
             response.json().then((res)=>{
-                this.setState({vues:res,nbVue:res.length})
-                this.vues=res
+                //this.setState({vues:res,nbVue:res.length})
+                dispatch({type:'vues',vues:res})
+                dispatch({type:'nbVues',nbVue:res.length})
             })
         })
     }
-    componentWillMount(){
-        this.initialisation()
-        //console.log('add user profil')
-        //console.log(this.state.user)
-        //console.log(this.state.moi)
-        //console.log(localStorage.getItem('moi'))
-        //console.log(localStorage.getItem('userProfil'))
-    }
 
-    render(){
-        return(
-            <>
-                {this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />}
+    useEffect(()=>{
+        console.log('STATE CHANGE')
+        console.log(stateChange)
+        initialisation()
+    })
+
+    return(
+        <>
+                {stateChange.moi==0 &&  <ProfileComponent user={JSON.stringify([stateChange.user])} visitedId={stateChange.visitedId}  />}
                 
                 <section className="sec-product-detail bg0 p-t-65 p-b-60">
                     <div className="container">
                         <div className="p-t-33">
                             <div className="profile-pic-div bg-dark">
-                                <img src={'/'+this.state.user.photoDeProfil} id="imgPhoto"  />                                
+                                <img src={'/'+stateChange.user.photoDeProfil} id="imgPhoto"  />                                
                             </div>
                             <div className="mt-4">
-                                <h2 className="text-center">{this.state.user.pseudo}</h2>
-                                <p className="text-center">{this.state.nbVue} vue(s)</p>
+                                <h2 className="text-center">{stateChange.user.pseudo}</h2>
+                                <p className="text-center">{stateChange.nbVue} vue(s)</p>
                             </div>
                         </div>
 
@@ -134,7 +141,7 @@ export class Profile_component1 extends Component{
                                         <a className="nav-link active" data-toggle="tab" href="#about" role="tab">A propos</a>	
                                     </li>
                                     
-                                    {this.state.moi==1 &&
+                                    {stateChange.moi==1 &&
                                     <li className="nav-item p-b-10">
                                         <a className="nav-link" data-toggle="tab" href="#myAccount" role="tab">Mon compte</a>
                                     </li>
@@ -144,7 +151,7 @@ export class Profile_component1 extends Component{
                                         <a className="nav-link" data-toggle="tab" href="#photo" role="tab">Photo</a>
                                     </li>
 
-                                    {this.state.moi==1 &&
+                                    {stateChange.moi==1 &&
                                     <li className="nav-item p-b-10">
                                         <a className="nav-link" data-toggle="tab" href="#vues" role="tab">Vues</a>
                                     </li>
@@ -153,26 +160,26 @@ export class Profile_component1 extends Component{
                                 
                                 <div className="tab-content p-t-43" style={{"display": "block"}}>
                                     
-                                    <Profile_about_component user={this.state.user} moi={this.state.moi} orientation={this.state.choixOrientation.defaultOpt} />
+                                    <Profile_about_component user={stateChange.user} moi={stateChange.moi} orientation={stateChange.choixOrientation.defaultOpt} />
                                     
                                     <div className="modal fade" id="profileEditModal" tabindex="-1" role="dialog" aria-labelledby="profileEditModalTitle" data-backdrop="static" aria-hidden="true">
                                         <div className="modal-dialog modal-dialog-centered modal-lg" style={{"top": "15%"}} role="document">
-                                            <ProfleEdit user={this.state.user} choixOrientation={this.state.choixOrientation}  />
+                                            <ProfleEdit user={stateChange.user} choixOrientation={stateChange.choixOrientation}  />
                                         </div>
                                     </div>
 
-                                    {this.state.moi==1&&
-                                    <><Profile_account_component user={this.state.user} />
+                                    {stateChange.moi==1&&
+                                    <><Profile_account_component user={stateChange.user} />
                                     <div className="modal fade" id="updatePasswordModal" tabindex="-1" role="dialog" aria-labelledby="updatePasswordModalModalTitle" data-backdrop="static" aria-hidden="true">
                                         <div className="modal-dialog modal-dialog-centered modal-lg" style={{"top": "15%"}} role="document">
-                                            <UpdatePassword user={this.state.user}  />
+                                            <UpdatePassword user={stateChange.user}  />
                                         </div>
                                     </div></>
                                     }
-                                    <Profile_photo_component moi={this.state.moi} user={this.state.user}  />
+                                    <Profile_photo_component moi={stateChange.moi} user={stateChange.user}  />
 
-                                    {this.state.moi==1&&
-                                    <Profile_vues_component vues={this.state.vues} />
+                                    {stateChange.moi==1&&
+                                    <Profile_vues_component vues={stateChange.vues} />
                                     }
                                     
                                     
@@ -186,8 +193,5 @@ export class Profile_component1 extends Component{
                 
 
             </>
-        )
-    }
+    )
 }
-
-export default Profile_component1

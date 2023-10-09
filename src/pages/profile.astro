@@ -1,5 +1,6 @@
 ---
 import Profile_component1 from '../components/Profile_component1'
+import ProfileComponent2 from '../components/ProfileComponent2'
 import Page from '../components/Page.astro'
 import NavBar from '../components/NavBar.jsx';
 
@@ -8,5 +9,6 @@ const id = Astro.url.searchParams.get('id');
 ---
     <Page title="Site rencontre"  >
         <NavBar client:load />
+        <!--<ProfileComponent2 visitedId={id} client:only=react />-->
         <Profile_component1 visitedId={id} client:only=react />
     </Page>
