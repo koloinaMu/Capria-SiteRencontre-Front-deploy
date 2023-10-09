@@ -17,7 +17,7 @@ export class Profile_component1 extends Component{
 
     constructor(props){
         super(props)
-        visitedId=this.props.visitedId
+        this.visitedId=this.props.visitedId
         /*this.state ={
             user:{},
             visitedId:this.props.visitedId,
