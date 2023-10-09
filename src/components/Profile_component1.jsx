@@ -112,6 +112,7 @@ export class Profile_component1 extends Component{
     render(){
         console.log('VISITEDID')
         console.log(this.state.visitedId)
+        //console.log(this.state.visitedId)
         console.log(this.state)
         if(this.state.visitedId){
             return(
