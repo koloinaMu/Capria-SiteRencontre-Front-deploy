@@ -58,59 +58,62 @@ export class Profile_component1 extends Component{
     }
 
     initialisation = (id)=>{
-        var current_user=JSON.parse(localStorage.getItem('user'))[0]
-        current_user=current_user.id
-        //this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
-        console.log(localStorage.getItem('user'))
-        console.log(current_user)
-        console.log(current_user.id)
-        console.log(this.state.visitedId)
-        console.log(this.props.visitedId)
-        console.log(this.state.visitedId!=current_user)
-        if(id!=current_user){
-            fetch(api('users/id/'+id)).then((response) =>{
-                response.json().then((res)=>{
-                    this.setState({user:res[0]})
-                    this.user=res[0]
-                    const ori=this.setOrientation(res[0].sexe,res[0].orientationSxl)
-                    this.setState({choixOrientation:ori})
-                    this.orientation=ori
-                    console.log(ori)
-                    localStorage.setItem('userProfil',JSON.stringify(res[0]))
-                    localStorage.setItem('moi',0)
-                })
-            });
-            var obj={'visitor_id':current_user,'visited_id':id}
-            const jsonString = JSON.stringify(obj);
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Accept", "application/json");
+        setTimeout(()=>
+        {
+            var current_user=JSON.parse(localStorage.getItem('user'))[0]
+            current_user=current_user.id
+            //this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
+            console.log(localStorage.getItem('user'))
+            console.log(current_user)
+            console.log(current_user.id)
+            console.log(this.state.visitedId)
+            console.log(this.props.visitedId)
+            console.log(this.state.visitedId!=current_user)
+            if(id!=current_user){
+                fetch(api('users/id/'+id)).then((response) =>{
+                    response.json().then((res)=>{
+                        this.setState({user:res[0]})
+                        this.user=res[0]
+                        const ori=this.setOrientation(res[0].sexe,res[0].orientationSxl)
+                        this.setState({choixOrientation:ori})
+                        this.orientation=ori
+                        console.log(ori)
+                        localStorage.setItem('userProfil',JSON.stringify(res[0]))
+                        localStorage.setItem('moi',0)
+                    })
+                });
+                var obj={'visitor_id':current_user,'visited_id':id}
+                const jsonString = JSON.stringify(obj);
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Accept", "application/json");
 
-        //console.log(jsonString);
-            fetch(api('views/add'), {
-                headers: myHeaders,
-                method:'POST',
-                body:jsonString
-            });
-        }else{            
-            localStorage.setItem('userProfil',localStorage.getItem('user'))
-            localStorage.setItem('moi',1)
-            this.setState({moi:1})
-            const us=JSON.parse(localStorage.getItem('user'))[0]
-            this.setState({user:us})      
-            this.user=us
-            this.moi=1      
-            const ori=this.setOrientation(us.sexe,us.orientationSxl)
-            this.setState({choixOrientation:ori})
-            this.orientation=ori
-            console.log(ori)
-        }
-        fetch(api('views/visitor/'+id)).then((response) => {
-            response.json().then((res)=>{
-                this.setState({vues:res,nbVue:res.length})
-                this.vues=res
+            //console.log(jsonString);
+                fetch(api('views/add'), {
+                    headers: myHeaders,
+                    method:'POST',
+                    body:jsonString
+                });
+            }else{            
+                localStorage.setItem('userProfil',localStorage.getItem('user'))
+                localStorage.setItem('moi',1)
+                this.setState({moi:1})
+                const us=JSON.parse(localStorage.getItem('user'))[0]
+                this.setState({user:us})      
+                this.user=us
+                this.moi=1      
+                const ori=this.setOrientation(us.sexe,us.orientationSxl)
+                this.setState({choixOrientation:ori})
+                this.orientation=ori
+                console.log(ori)
+            }
+            fetch(api('views/visitor/'+id)).then((response) => {
+                response.json().then((res)=>{
+                    this.setState({vues:res,nbVue:res.length})
+                    this.vues=res
+                })
             })
-        })
+        },5000)
     }
     componentDidMount(){
         console.log('VISITEDID')
