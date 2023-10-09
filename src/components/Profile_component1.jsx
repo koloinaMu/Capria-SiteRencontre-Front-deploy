@@ -112,6 +112,8 @@ export class Profile_component1 extends Component{
         })
     }
     componentDidMount(){
+        console.log('VISITEDID')
+        console.log(this.props.visitedId)
         if(this.props.visitedId){
             console.log('VISITEDID')
             console.log(this.props.visitedId)
