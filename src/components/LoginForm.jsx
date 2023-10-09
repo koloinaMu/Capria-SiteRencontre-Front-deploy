@@ -10,9 +10,10 @@ export default function Login() {
 
     const log = async()=>{
         console.log(email)
-        var res=String(email)
+        /*var res=String(email)
         .toLowerCase()
-        .match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/);
+        .match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/);*/
+        var res='mety foana'
         //var txt='ertyr.00@oiur.fr';
         //console.log(String(txt).match(/^[a-zA-Z0-9.]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+$/));
         //console.log(res);
