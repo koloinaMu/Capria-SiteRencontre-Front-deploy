@@ -123,7 +123,7 @@ export class Profile_component1 extends Component{
         console.log(this.state.visitedId)
         //console.log(this.state.visitedId)
         console.log(this.state)
-        console.log(this.state.user)
+        console.log(this.state.user)        
         if(this.state.user.id){
             return(
                 <>
