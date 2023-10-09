@@ -17,6 +17,7 @@ export class Profile_component1 extends Component{
 
     constructor(props){
         super(props)
+        visitedId=this.props.visitedId
         /*this.state ={
             user:{},
             visitedId:this.props.visitedId,
@@ -56,7 +57,7 @@ export class Profile_component1 extends Component{
         //console.log(defaultOpt)
     }
 
-    initialisation = ()=>{
+    initialisation = (id)=>{
         var current_user=JSON.parse(localStorage.getItem('user'))[0]
         current_user=current_user.id
         //this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
@@ -66,8 +67,8 @@ export class Profile_component1 extends Component{
         console.log(this.state.visitedId)
         console.log(this.props.visitedId)
         console.log(this.state.visitedId!=current_user)
-        if(this.props.visitedId!=current_user){
-            fetch(api('users/id/'+this.state.visitedId)).then((response) =>{
+        if(id!=current_user){
+            fetch(api('users/id/'+id)).then((response) =>{
                 response.json().then((res)=>{
                     this.setState({user:res[0]})
                     this.user=res[0]
@@ -79,7 +80,7 @@ export class Profile_component1 extends Component{
                     localStorage.setItem('moi',0)
                 })
             });
-            var obj={'visitor_id':current_user,'visited_id':this.state.visitedId}
+            var obj={'visitor_id':current_user,'visited_id':id}
             const jsonString = JSON.stringify(obj);
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -104,7 +105,7 @@ export class Profile_component1 extends Component{
             this.orientation=ori
             console.log(ori)
         }
-        fetch(api('views/visitor/'+this.state.visitedId)).then((response) => {
+        fetch(api('views/visitor/'+id)).then((response) => {
             response.json().then((res)=>{
                 this.setState({vues:res,nbVue:res.length})
                 this.vues=res
@@ -114,10 +115,11 @@ export class Profile_component1 extends Component{
     componentDidMount(){
         console.log('VISITEDID')
         console.log(this.props.visitedId)
+        console.log(this.visitedId)
         if(this.props.visitedId){
             console.log('VISITEDID')
             console.log(this.props.visitedId)
-            this.initialisation()
+            this.initialisation(this.props.visitedId)
         }
         //alert('WILL MOUNT')
     }
