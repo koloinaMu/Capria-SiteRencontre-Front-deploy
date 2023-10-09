@@ -113,7 +113,7 @@ export class Profile_component1 extends Component{
         console.log('VISITEDID')
         console.log(this.state.visitedId)
         console.log(this.state)
-        if(this.props.visitedId){
+        if(this.state.visitedId){
             return(
                 <>
                     {this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />}
