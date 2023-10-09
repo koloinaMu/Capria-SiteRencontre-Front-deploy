@@ -18,6 +18,8 @@ export class Profile_component1 extends Component{
     constructor(props){
         super(props)
         this.visitedId=this.props.visitedId
+        console.log('CONSTRUCTEURRRR')
+        console.log(this.visitedId)
         /*this.state ={
             user:{},
             visitedId:this.props.visitedId,
@@ -26,6 +28,7 @@ export class Profile_component1 extends Component{
             nbVue:0,
             choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
         }*/
+        this.initialisation(this.visitedId)
     }
     state ={
         user:{},
@@ -115,7 +118,7 @@ export class Profile_component1 extends Component{
             })
         },5000)
     }
-    componentDidMount(){
+    /*componentDidMount(){
         console.log('VISITEDID')
         console.log(this.props.visitedId)
         console.log(this.visitedId)
@@ -125,7 +128,7 @@ export class Profile_component1 extends Component{
             this.initialisation(this.visitedId)
         //}
         //alert('WILL MOUNT')
-    }
+    }*/
     /*componentDidUpdate(){
         this.initialisation()        
     }*/
