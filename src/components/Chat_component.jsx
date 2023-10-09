@@ -102,7 +102,7 @@ export class Chat extends Component{
             });
         }
         var obj={'id':this.state.user.id,'filtres':[]}
-        //console.log(obj)
+        console.log(obj)
         const jsonString = JSON.stringify(obj);
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -116,6 +116,8 @@ export class Chat extends Component{
                 /*users=(res)
                 chatActive=(users[0])*/
                 var active=res[0]
+                console.log('COOKIES')
+                console.log(Cookies.get('idChatActive'))
                 const idChatActive=Cookies.get('idChatActive')
                 if(idChatActive!='null'){
                     //const idChatActive=this.props.idChatActive
