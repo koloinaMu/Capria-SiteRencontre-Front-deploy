@@ -66,7 +66,7 @@ export class Profile_component1 extends Component{
         console.log(this.state.visitedId)
         console.log(this.props.visitedId)
         console.log(this.state.visitedId!=current_user)
-        if(this.state.visitedId!=current_user){
+        if(this.props.visitedId!=current_user){
             fetch(api('users/id/'+this.state.visitedId)).then((response) =>{
                 response.json().then((res)=>{
                     this.setState({user:res[0]})
