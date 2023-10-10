@@ -22,25 +22,18 @@ export class Profile_component1 extends Component{
         //console.log(this.visitedId)
         //console.log(this)
         console.log(this.props)
-        /*this.state ={
+        this.state ={
             user:{},
             visitedId:this.props.visitedId,
             vues:[],
             moi:0,
             nbVue:0,
             choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
-        }*/
+        }
         console.log(this.props.visitedId)
         this.initialisation(this.visitedId)
     }
-    state ={
-        user:{},
-        visitedId:this.props.visitedId,
-        vues:[],
-        moi:0,
-        nbVue:0,
-        choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
-    }
+    
 
     user={}
     moi=0
@@ -120,24 +113,18 @@ export class Profile_component1 extends Component{
                 })
             })
         },5000)
-    }
-    UNSAFE_componentWillReceiveProps(newProps) {  
-  
-        // Performing an action    
-        console.log('Component is receiving new props', newProps); 
-        this.initialisation(newProps.visitedId)
-    } 
-    /*componentDidMount(){
+    }    
+    componentDidMount(){
         console.log('VISITEDID')
         console.log(this.props.visitedId)
-        console.log(this.visitedId)
-        //if(this.visitedId){
+        console.log(this.state.visitedId)
+        if(this.state.visitedId){
             //console.log('VISITEDID')
             //console.log(this.props.visitedId)
             this.initialisation(this.visitedId)
-        //}
+        }
         //alert('WILL MOUNT')
-    }*/
+    }
     /*componentDidUpdate(){
         this.initialisation()        
     }*/
