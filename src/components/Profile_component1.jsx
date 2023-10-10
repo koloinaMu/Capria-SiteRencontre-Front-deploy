@@ -20,7 +20,7 @@ export class Profile_component1 extends Component{
         this.visitedId=this.props.visitedId
         console.log('CONSTRUCTEURRRR')
         //console.log(this.visitedId)
-        console.log(this)
+        //console.log(this)
         console.log(this.props)
         /*this.state ={
             user:{},
