@@ -10,7 +10,7 @@ import api from "../const/api"
 import Profile_vues_component from '../components/Profile_vues_component'
 import UpdatePassword from '../components/Update_password'
 import ProfileComponent from '../components/Profile_component'
-import {Component} from 'react'
+import {Component,UNSAFE_componentWillReceiveProps} from 'react'
 import './profile.css'
 
 export class Profile_component1 extends Component{
@@ -121,6 +121,12 @@ export class Profile_component1 extends Component{
             })
         },5000)
     }
+    UNSAFE_componentWillReceiveProps(newProps) {  
+  
+        // Performing an action    
+        console.log('Component is receiving new props', newProps); 
+        this.initialisation(newProps.visitedId)
+    } 
     /*componentDidMount(){
         console.log('VISITEDID')
         console.log(this.props.visitedId)

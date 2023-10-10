@@ -10,5 +10,5 @@ const id = Astro.url.searchParams.get('id');
     <Page title="Site rencontre"  >
         <NavBar client:load />
         <!--<ProfileComponent2 visitedId={id} client:only=react />-->
-        <Profile_component1 visitedId={id} client:load />
+        <Profile_component1 visitedId={id} client:only=react />
     </Page>
