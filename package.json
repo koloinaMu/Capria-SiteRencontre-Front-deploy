@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@astrojs/netlify": "^2.3.0",
-    "@astrojs/node": "^5.1.0",
+    "@astrojs/node": "^5.3.6",
     "@astrojs/react": "^2.2.1",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",

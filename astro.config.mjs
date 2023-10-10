@@ -7,7 +7,10 @@ export default defineConfig({
   integrations: [react()],
   //middleware: true,
   output:'hybrid',
-  adapter: netlify({}),
+  //adapter: netlify({}),
+  adapter: node({
+    mode: "standalone",
+  }),
   /*experimental: {
     redirects: true
   },*/
