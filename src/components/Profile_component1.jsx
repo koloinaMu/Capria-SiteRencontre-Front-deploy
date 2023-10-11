@@ -11,6 +11,7 @@ import Profile_vues_component from '../components/Profile_vues_component'
 import UpdatePassword from '../components/Update_password'
 import ProfileComponent from '../components/Profile_component'
 import {Component,UNSAFE_componentWillReceiveProps} from 'react'
+import Cookies from 'js-cookie'
 //import {useLocation} from 'react-router-dom'
 import './profile.css'
 
@@ -65,10 +66,7 @@ export class Profile_component1 extends Component{
             //this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
             console.log(localStorage.getItem('user'))
             console.log(current_user)
-            console.log(current_user.id)
-            console.log(this.state.visitedId)
-            console.log(this.props.visitedId)
-            console.log(this.state.visitedId!=current_user)
+            console.log(id)    
             if(id!=current_user){
                 fetch(api('users/id/'+id)).then((response) =>{
                     response.json().then((res)=>{
@@ -121,7 +119,9 @@ export class Profile_component1 extends Component{
         console.log(this.state.visitedId)
         console.log(window.location.href.split('='))
         const id=window.location.href.split('=')[1]
-        if(this.state.visitedId){
+        console.log(window)
+        Cookies.set('userChatActive',id)
+        if(id){
             //console.log('VISITEDID')
             //console.log(this.props.visitedId)
             this.initialisation(id)
