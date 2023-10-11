@@ -20,10 +20,10 @@ export class Profile_component1 extends Component{
     constructor(props){
         super(props)
         this.visitedId=this.props.visitedId
-        console.log('CONSTRUCTEURRRR')
+        //console.log('CONSTRUCTEURRRR')
         //console.log(this.visitedId)
         //console.log(this)
-        console.log(this.props)
+       // console.log(this.props)
         this.state ={
             user:{},
             visitedId:this.props.visitedId,
@@ -32,7 +32,7 @@ export class Profile_component1 extends Component{
             nbVue:0,
             choixOrientation:{defaultOpt:'Heterosexuel',defaultValue:'F',autreOpt:'Homosexuel',autreValue:'H'}            
         }
-        console.log(this.props.visitedId)
+        //console.log(this.props.visitedId)
         this.initialisation(this.visitedId)
     }
     
@@ -62,12 +62,10 @@ export class Profile_component1 extends Component{
         setTimeout(()=>
         {
             var current_user=JSON.parse(localStorage.getItem('user'))[0]
-            current_user=current_user.id
-            //this.setState({user:JSON.parse(localStorage.getItem('user'))[0]})
-            console.log(localStorage.getItem('user'))
-            console.log(current_user)
-            console.log(id)    
+            current_user=current_user.id 
             if(id!=current_user){
+                console.log('INIT GET USER')
+                console.log(id)
                 fetch(api('users/id/'+id)).then((response) =>{
                     response.json().then((res)=>{
                         this.setState({user:res[0]})
@@ -76,12 +74,14 @@ export class Profile_component1 extends Component{
                         const ori=this.setOrientation(res[0].sexe,res[0].orientationSxl)
                         this.setState({choixOrientation:ori})
                         this.orientation=ori
-                        console.log(ori)
+                        //console.log(ori)
                         localStorage.setItem('userProfil',JSON.stringify(res[0]))
                         localStorage.setItem('moi',0)
                         Cookies.set('moi',0)
                     })
                 });
+                console.log('INIT VISITOR')
+                console.log(id)
                 var obj={'visitor_id':current_user,'visited_id':id}
                 const jsonString = JSON.stringify(obj);
                 var myHeaders = new Headers();
@@ -107,8 +107,11 @@ export class Profile_component1 extends Component{
                 const ori=this.setOrientation(us.sexe,us.orientationSxl)
                 this.setState({choixOrientation:ori})
                 this.orientation=ori
-                console.log(ori)
+                //console.log(ori)
             }
+            
+            console.log('INIT ADD VISITOR')
+            console.log(id)
             fetch(api('views/visitor/'+id)).then((response) => {
                 response.json().then((res)=>{
                     this.setState({vues:res,nbVue:res.length})
@@ -118,21 +121,32 @@ export class Profile_component1 extends Component{
         },5000)
     }    
     componentDidMount(){
-        console.log('VISITEDID')
-        console.log(this.props.visitedId)
-        console.log(this.state.visitedId)
-        console.log(window.location)
-        console.log(window.location.href.split('='))
+        //console.log('VISITEDID')
+        //console.log(this.props.visitedId)
+        //console.log(this.state.visitedId)
+        //console.log(window.location)
+        //console.log(window.location.href.split('='))
         const id=window.location.href.split('=')[1]
         Cookies.set('idUserChatActive',id)
+        
         if(id){
+            console.log('ID EXISTE INIT')
+            console.log(id)
             //console.log('VISITEDID')
             //console.log(this.props.visitedId)
             this.initialisation(id)
+            window.addEventListener('beforeunload',()=>{
+                const domaine=window.location.protocol+'//:'+window.location.hostname
+                //alert(domaine)
+                Cookies.remove('idUserChatActive')        
+                Cookies.remove('userChatActive')
+                Cookies.remove('moi')
+            })
         }
         //alert('WILL MOUNT')
     }
     componentWillUnmount(){
+        
         Cookies.remove('idUserChatActive', { path: '/', domain: window.location.hostname })        
         Cookies.remove('userChatActive', { path: '/', domain: window.location.hostname })
         Cookies.remove('moi', { path: '/', domain: window.location.hostname })
@@ -140,9 +154,11 @@ export class Profile_component1 extends Component{
 
     render(){                   
         if(Cookies.get('userChatActive')&&Cookies.get('moi')){
-            console.log(Cookies.get('userChatActive'))
+            //console.log(Cookies.get('userChatActive'))
             const uss=JSON.parse(Cookies.get('userChatActive'))
+            console.log('RENDER SATRIA EFA MISY USER DIA MISY MOI')
             console.log(uss)
+            //console.log(uss)
             const moiii=Cookies.get('moi')  
             const orientation=this.setOrientation(uss.sexe,uss.orientationSxl)
             return(
