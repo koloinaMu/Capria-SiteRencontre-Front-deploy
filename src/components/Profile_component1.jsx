@@ -71,6 +71,7 @@ export class Profile_component1 extends Component{
                 fetch(api('users/id/'+id)).then((response) =>{
                     response.json().then((res)=>{
                         this.setState({user:res[0]})
+                        Cookies.set('userChatActive',JSON.stringify(res[0]))
                         this.user=res[0]
                         const ori=this.setOrientation(res[0].sexe,res[0].orientationSxl)
                         this.setState({choixOrientation:ori})
@@ -78,6 +79,7 @@ export class Profile_component1 extends Component{
                         console.log(ori)
                         localStorage.setItem('userProfil',JSON.stringify(res[0]))
                         localStorage.setItem('moi',0)
+                        Cookies.set('moi',0)
                     })
                 });
                 var obj={'visitor_id':current_user,'visited_id':id}
@@ -97,9 +99,11 @@ export class Profile_component1 extends Component{
                 localStorage.setItem('moi',1)
                 this.setState({moi:1})
                 const us=JSON.parse(localStorage.getItem('user'))[0]
+                Cookies.set('userChatActive',JSON.stringify(us))
                 this.setState({user:us})      
                 this.user=us
-                this.moi=1      
+                this.moi=1     
+                Cookies.set('moi',1) 
                 const ori=this.setOrientation(us.sexe,us.orientationSxl)
                 this.setState({choixOrientation:ori})
                 this.orientation=ori
@@ -117,10 +121,10 @@ export class Profile_component1 extends Component{
         console.log('VISITEDID')
         console.log(this.props.visitedId)
         console.log(this.state.visitedId)
+        console.log(window.location)
         console.log(window.location.href.split('='))
         const id=window.location.href.split('=')[1]
-        console.log(window)
-        Cookies.set('userChatActive',id)
+        Cookies.set('idUserChatActive',id)
         if(id){
             //console.log('VISITEDID')
             //console.log(this.props.visitedId)
@@ -128,24 +132,35 @@ export class Profile_component1 extends Component{
         }
         //alert('WILL MOUNT')
     }
-    /*componentDidUpdate(){
-        this.initialisation()        
-    }*/
+    componentWillUnmount(){
+        Cookies.remove('idUserChatActive', { path: '/', domain: window.location.hostname })        
+        Cookies.remove('userChatActive', { path: '/', domain: window.location.hostname })
+        Cookies.remove('moi', { path: '/', domain: window.location.hostname })
+    }
 
-    render(){               
-        if(this.state.user.id){
+    render(){                   
+        if(Cookies.get('userChatActive')&&Cookies.get('moi')){
+            console.log(Cookies.get('userChatActive'))
+            const uss=JSON.parse(Cookies.get('userChatActive'))
+            console.log(uss)
+            const moiii=Cookies.get('moi')  
+            const orientation=this.setOrientation(uss.sexe,uss.orientationSxl)
             return(
                 <>
-                    {this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />}
+                    {/*this.state.moi==0 &&  <ProfileComponent user={JSON.stringify([this.state.user])} visitedId={this.state.visitedId}  />*/}
+                    {moiii==0 &&  <ProfileComponent user={JSON.stringify([uss])} visitedId={uss.id}  />}
                     
                     <section className="sec-product-detail bg0 p-t-65 p-b-60">
                         <div className="container">
                             <div className="p-t-33">
                                 <div className="profile-pic-div bg-dark">
-                                    <img src={'/'+this.state.user.photoDeProfil} id="imgPhoto"  />                                
+                                    {/*<img src={'/'+this.state.user.photoDeProfil} id="imgPhoto"  />*/}
+                                    <img src={'/'+uss.photoDeProfil} id="imgPhoto"  />                                
                                 </div>
                                 <div className="mt-4">
-                                    <h2 className="text-center">{this.state.user.pseudo}</h2>
+                                    {/*<h2 className="text-center">{this.state.user.pseudo}</h2>
+                                    <p className="text-center">{this.state.nbVue} vue(s)</p>*/}
+                                    <h2 className="text-center">{uss.pseudo}</h2>
                                     <p className="text-center">{this.state.nbVue} vue(s)</p>
                                 </div>
                             </div>
@@ -157,7 +172,12 @@ export class Profile_component1 extends Component{
                                             <a className="nav-link active" data-toggle="tab" href="#about" role="tab">A propos</a>	
                                         </li>
                                         
-                                        {this.state.moi==1 &&
+                                        {/*this.state.moi==1 &&
+                                        <li className="nav-item p-b-10">
+                                            <a className="nav-link" data-toggle="tab" href="#myAccount" role="tab">Mon compte</a>
+                                        </li>*/
+                                        }
+                                        {moiii==1 &&
                                         <li className="nav-item p-b-10">
                                             <a className="nav-link" data-toggle="tab" href="#myAccount" role="tab">Mon compte</a>
                                         </li>
@@ -166,8 +186,13 @@ export class Profile_component1 extends Component{
                                         <li className="nav-item p-b-10">
                                             <a className="nav-link" data-toggle="tab" href="#photo" role="tab">Photo</a>
                                         </li>
-    
-                                        {this.state.moi==1 &&
+
+                                        {/*this.state.moi==1 &&
+                                        <li className="nav-item p-b-10">
+                                            <a className="nav-link" data-toggle="tab" href="#vues" role="tab">Vues</a>
+                                        </li>*/
+                                        }
+                                        {moiii==1 &&
                                         <li className="nav-item p-b-10">
                                             <a className="nav-link" data-toggle="tab" href="#vues" role="tab">Vues</a>
                                         </li>
@@ -176,15 +201,17 @@ export class Profile_component1 extends Component{
                                     
                                     <div className="tab-content p-t-43" style={{"display": "block"}}>
                                         
-                                        <Profile_about_component user={this.state.user} moi={this.state.moi} orientation={this.state.choixOrientation.defaultOpt} />
+                                        {/*<Profile_about_component user={this.state.user} moi={this.state.moi} orientation={this.state.choixOrientation.defaultOpt} />*/}
+                                        <Profile_about_component user={uss} moi={moiii} orientation={orientation.defaultOpt} />
                                         
                                         <div className="modal fade" id="profileEditModal" tabindex="-1" role="dialog" aria-labelledby="profileEditModalTitle" data-backdrop="static" aria-hidden="true">
                                             <div className="modal-dialog modal-dialog-centered modal-lg" style={{"top": "15%"}} role="document">
-                                                <ProfleEdit user={this.state.user} choixOrientation={this.state.choixOrientation}  />
+                                                {/*<ProfleEdit user={this.state.user} choixOrientation={this.state.choixOrientation}  />*/}
+                                                <ProfleEdit user={uss} choixOrientation={orientation}  />
                                             </div>
                                         </div>
     
-                                        {this.state.moi==1&&
+                                        {/*{this.state.moi==1&&
                                         <><Profile_account_component user={this.state.user} />
                                         <div className="modal fade" id="updatePasswordModal" tabindex="-1" role="dialog" aria-labelledby="updatePasswordModalModalTitle" data-backdrop="static" aria-hidden="true">
                                             <div className="modal-dialog modal-dialog-centered modal-lg" style={{"top": "15%"}} role="document">
@@ -196,8 +223,20 @@ export class Profile_component1 extends Component{
     
                                         {this.state.moi==1&&
                                         <Profile_vues_component vues={this.state.vues} />
+                                        }*/}
+                                        {moiii==1&&
+                                        <><Profile_account_component user={uss} />
+                                        <div className="modal fade" id="updatePasswordModal" tabindex="-1" role="dialog" aria-labelledby="updatePasswordModalModalTitle" data-backdrop="static" aria-hidden="true">
+                                            <div className="modal-dialog modal-dialog-centered modal-lg" style={{"top": "15%"}} role="document">
+                                                <UpdatePassword user={uss}  />
+                                            </div>
+                                        </div></>
                                         }
-                                        
+                                        <Profile_photo_component moi={moiii} user={uss}  />
+    
+                                        {moiii==1&&
+                                        <Profile_vues_component vues={this.state.vues} />
+                                        }
                                         
                                         
                                     </div>
