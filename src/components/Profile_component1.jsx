@@ -11,6 +11,7 @@ import Profile_vues_component from '../components/Profile_vues_component'
 import UpdatePassword from '../components/Update_password'
 import ProfileComponent from '../components/Profile_component'
 import {Component,UNSAFE_componentWillReceiveProps} from 'react'
+//import {useLocation} from 'react-router-dom'
 import './profile.css'
 
 export class Profile_component1 extends Component{
@@ -118,10 +119,12 @@ export class Profile_component1 extends Component{
         console.log('VISITEDID')
         console.log(this.props.visitedId)
         console.log(this.state.visitedId)
+        console.log(window.location.href.split('='))
+        const id=window.location.href.split('=')[1]
         if(this.state.visitedId){
             //console.log('VISITEDID')
             //console.log(this.props.visitedId)
-            this.initialisation(this.visitedId)
+            this.initialisation(id)
         }
         //alert('WILL MOUNT')
     }
