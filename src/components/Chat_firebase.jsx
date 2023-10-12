@@ -4,6 +4,7 @@ import api from '../const/api';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { auth, db } from "../firebase";
+import Cookies from 'js-cookie'
 import { collection, addDoc, serverTimestamp, query, limit, orderBy, onSnapshot, where, Query } from "firebase/firestore";
 
 export default function Chat_firebase(props) {
@@ -15,10 +16,12 @@ export default function Chat_firebase(props) {
 
     const [messages, setMessages] = useState([])
     const [yourMessage, setYourMessage] = useState()
-    const [checkAbo,setCheckAbo]=useState(parseInt(localStorage.getItem('checkAbo')))
+    //const [checkAbo,setCheckAbo]=useState(parseInt(localStorage.getItem('checkAbo')))
+    const [checkAbo,setCheckAbo]=useState(parseInt(props.checkAbo))
     //console.log(checkAbo)
-    const [nbMsg,setNbMsg]=useState(localStorage.getItem('nbMsg'))
-    var nbMsg1=parseInt(localStorage.getItem('nbMsg'))
+    const [nbMsg,setNbMsg]=useState(props.nbMsg)
+    //var nbMsg1=parseInt(localStorage.getItem('nbMsg'))
+    var nbMsg1=parseInt(props.nbMsg)
     const [showPicker,setShowPicker]=useState(false)
     
     const abonnement=(JSON.parse(localStorage.getItem('abonnement')))

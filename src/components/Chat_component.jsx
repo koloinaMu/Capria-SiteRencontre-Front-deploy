@@ -91,6 +91,7 @@ export class Chat extends Component{
                 const nb=messages1.length
                 this.setState({nbMsg:nb})
                 localStorage.setItem('nbMsg',nb)
+                Cookies.set('nbMsg',nb)
                 var check=0
                 //console.log('NB MSG INIT')
                 //console.log(nb)
@@ -101,6 +102,7 @@ export class Chat extends Component{
                 }
                 //console.log(check)           
                 localStorage.setItem('checkAbo',check)
+                Cookies.set('checkAbo',check)
             });
         }
         var obj={'id':this.state.user.id,'filtres':[]}
@@ -149,6 +151,8 @@ export class Chat extends Component{
             const domaine=window.location.protocol+'//:'+window.location.hostname
             //alert(domaine)
             Cookies.remove('idUserChatActive')        
+            Cookies.remove('nbMsg')        
+            Cookies.remove('checkAbo')        
             Cookies.remove('userChatActive')
         })
     }
@@ -161,9 +165,9 @@ export class Chat extends Component{
         }*/
         //initialisation()
         /*return(<ChatComponent user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive} key={this.state.chatActive.id}  />)*/
-        if(Cookies.get('userChatActive')&&Cookies.get('idUserChatActive')){
+        if(Cookies.get('userChatActive')&&Cookies.get('idUserChatActive')&&Cookies.get('checkAbo')&&Cookies.get('nbMsg')){
             const userActive=JSON.parse(Cookies.get('userChatActive'))
-            return(<Chat_firebase user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={userActive} key={userActive.id}  />)
+            return(<Chat_firebase user={this.state.user} users={this.state.users} nbMsg={Cookies.get('nbMsg')} checkAbo={Cookies.get('checkAbo')} abonnement={this.state.abonnement} chatActive={userActive} key={userActive.id}  />)
         }
         /*return (
             {this.state.chatActive && 
