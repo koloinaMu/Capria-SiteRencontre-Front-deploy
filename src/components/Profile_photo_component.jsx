@@ -127,7 +127,7 @@ export default function Profile_photo_component(props){
                                         {photos.map((photo)=>(
                                             <div className="item-slick3" data-thumb={photo.url}>
                                                 <div className="wrap-pic-w pos-relative">
-                                                    <img src={'/'+photo.url} alt="IMG-PRODUCT"/>
+                                                    <img src={photo.url} alt="IMG-PRODUCT"/>
 
                                                     
                                                 </div>
