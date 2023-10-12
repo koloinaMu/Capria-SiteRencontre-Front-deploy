@@ -31,7 +31,9 @@ export class Chat extends Component{
     };    */
 
     initialisation =  ()=>{
-                    
+        const id=window.location.href.split('=')[1]
+        console.log('ID HREF')
+        console.log(id)
         const abo=localStorage.getItem('abonnement')
         const limitMsg=5
         if (abo==''){
