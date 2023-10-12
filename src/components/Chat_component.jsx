@@ -31,7 +31,7 @@ export class Chat extends Component{
     };    */
 
     initialisation =  ()=>{
-        const id=window.location.href.split('=')[1]
+        var id=window.location.href.split('=')[1]
         console.log('ID HREF')
         console.log(id)
         const abo=localStorage.getItem('abonnement')
@@ -120,18 +120,22 @@ export class Chat extends Component{
                 var active=res[0]
                 console.log('COOKIES')
                 console.log(Cookies.get('idChatActive'))
-                const idChatActive=Cookies.get('idChatActive')
-                if(idChatActive!='null'){
+                //const idChatActive=Cookies.get('idChatActive')
+                if(id!=undefined){
                     //const idChatActive=this.props.idChatActive
-                    if(res.findIndex(i => i.id==idChatActive) > -1){
+                    if(res.findIndex(i => i.id==id) > -1){
                         //chatActive=users.filter(i => i.id == idChatActive)[0]
                         //chatActive=(users.filter(i => i.id == idChatActive)[0])
-                        active=(res.filter(i => i.id == idChatActive)[0])
+                        active=(res.filter(i => i.id == id)[0])
                     }
+                }else{
+                    id=active.id
                 }
                 //localStorage.setItem('activatedChat',JSON.stringify(active))
                 localStorage.setItem('userChatActive',JSON.stringify(active))
-                localStorage.setItem('activatedChat',active.id)                
+                localStorage.setItem('activatedChat',active.id)  
+                Cookies.set('idUserChatActive',id)          
+                Cookies.set('userChatActive',JSON.stringify(active))
                 this.setState({users:res,chatActive:active})                
             })
         })  
@@ -141,6 +145,12 @@ export class Chat extends Component{
 
     componentDidMount(){
         this.initialisation()
+        window.addEventListener('beforeunload',()=>{
+            const domaine=window.location.protocol+'//:'+window.location.hostname
+            //alert(domaine)
+            Cookies.remove('idUserChatActive')        
+            Cookies.remove('userChatActive')
+        })
     }
     
     render(){
@@ -151,7 +161,10 @@ export class Chat extends Component{
         }*/
         //initialisation()
         /*return(<ChatComponent user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive} key={this.state.chatActive.id}  />)*/
-        return(<Chat_firebase user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive} key={this.state.chatActive.id}  />)
+        if(Cookies.get('userChatActive')&&Cookies.get('idUserChatActive')){
+            const userActive=JSON.parse(Cookies.get('userChatActive'))
+            return(<Chat_firebase user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={userActive} key={userActive.id}  />)
+        }
         /*return (
             {this.state.chatActive && 
                 (<ChatComponent user={this.state.user} users={this.state.users} nbMsg={this.state.nbMsg} checkAbo={this.state.checkAbo} abonnement={this.state.abonnement} chatActive={this.state.chatActive}  />)
