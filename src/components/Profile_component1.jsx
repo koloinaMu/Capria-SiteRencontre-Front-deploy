@@ -58,7 +58,8 @@ export class Profile_component1 extends Component{
         //console.log(defaultOpt)
     }
 
-    initialisation = (id)=>{
+    initialisation = ()=>{
+        const id=window.location.href.split('=')[1]
         setTimeout(()=>
         {
             var current_user=JSON.parse(localStorage.getItem('user'))[0]
@@ -69,13 +70,13 @@ export class Profile_component1 extends Component{
                 fetch(api('users/id/'+id)).then((response) =>{
                     response.json().then((res)=>{
                         this.setState({user:res[0]})
-                        Cookies.set('userChatActive',JSON.stringify(res[0]))
+                        Cookies.set('userProfilActive',JSON.stringify(res[0]))
                         this.user=res[0]
                         const ori=this.setOrientation(res[0].sexe,res[0].orientationSxl)
                         this.setState({choixOrientation:ori})
                         this.orientation=ori
                         //console.log(ori)
-                        localStorage.setItem('userProfil',JSON.stringify(res[0]))
+                        localStorage.setItem('userProfilActive',JSON.stringify(res[0]))
                         localStorage.setItem('moi',0)
                         Cookies.set('moi',0)
                     })
@@ -99,7 +100,7 @@ export class Profile_component1 extends Component{
                 localStorage.setItem('moi',1)
                 this.setState({moi:1})
                 const us=JSON.parse(localStorage.getItem('user'))[0]
-                Cookies.set('userChatActive',JSON.stringify(us))
+                Cookies.set('userProfilActive',JSON.stringify(us))
                 this.setState({user:us})      
                 this.user=us
                 this.moi=1     
@@ -127,19 +128,19 @@ export class Profile_component1 extends Component{
         //console.log(window.location)
         //console.log(window.location.href.split('='))
         const id=window.location.href.split('=')[1]
-        Cookies.set('idUserChatActive',id)
+        Cookies.set('idUserProfilActive',id)
         
         if(id){
             console.log('ID EXISTE INIT')
             console.log(id)
             //console.log('VISITEDID')
             //console.log(this.props.visitedId)
-            this.initialisation(id)
+            this.initialisation()
             window.addEventListener('beforeunload',()=>{
                 const domaine=window.location.protocol+'//:'+window.location.hostname
                 //alert(domaine)
-                Cookies.remove('idUserChatActive')        
-                Cookies.remove('userChatActive')
+                Cookies.remove('idUserProfilActive')        
+                Cookies.remove('userProfilActive')
                 Cookies.remove('moi')
             })
         }
@@ -147,15 +148,15 @@ export class Profile_component1 extends Component{
     }
     componentWillUnmount(){
         
-        Cookies.remove('idUserChatActive', { path: '/', domain: window.location.hostname })        
-        Cookies.remove('userChatActive', { path: '/', domain: window.location.hostname })
+        Cookies.remove('idUserProfilActive', { path: '/', domain: window.location.hostname })        
+        Cookies.remove('userProfilActive', { path: '/', domain: window.location.hostname })
         Cookies.remove('moi', { path: '/', domain: window.location.hostname })
     }
 
     render(){                   
-        if(Cookies.get('userChatActive')&&Cookies.get('moi')){
-            //console.log(Cookies.get('userChatActive'))
-            const uss=JSON.parse(Cookies.get('userChatActive'))
+        if(Cookies.get('userProfilActive')&&Cookies.get('moi')){
+            //console.log(Cookies.get('userProfilActive'))
+            const uss=JSON.parse(Cookies.get('userProfilActive'))
             console.log('RENDER SATRIA EFA MISY USER DIA MISY MOI')
             console.log(uss)
             //console.log(uss)
