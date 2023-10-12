@@ -37,7 +37,55 @@ export default function Subscription() {
 
     const subscribe = (sub) => {
         const user = JSON.parse(localStorage.getItem("user"))[0];
-        fetch(api('paiement'),{
+        /* DEBUT CODE NALAINA */
+        const today = new Date();
+        let end_date = moment(today.getFullYear()+'-'+(today.getMonth()+sub.duree+1)+'-'+today.getDate(), 'yyyy-mm-dd');
+        //console.log(res.statu)
+        fetch(api('subscription'), {
+            headers: {"Content-Type": "application/json"},
+            method: "POST",
+            body: JSON.stringify({
+                "id_abo": sub.id,
+                "id_user": user.id,
+                "date_fin": end_date._i,
+                "prix": sub.prix
+            })
+        }).then((res) => {
+            //console.log(res)
+            if(res.ok) {
+                //console.log(user)
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Accept", "application/json");
+                fetch(api("subscription/"+user.id), {
+                    headers: myHeaders,
+                    method:'GET'
+                }).then((res)=>{
+                    //console.log(res)
+                    res.json().then((abo)=>{
+                        //console.log(abo)
+                        if(abo.length==0){
+                            localStorage.setItem("abonnement",'')
+                        }else{          
+                            const ajd=new Date()
+                            const dateFin=new Date(abo[0].date_fin)
+                            if(dateFin>ajd){
+                                localStorage.setItem("abonnement",JSON.stringify(abo[0]));
+                            }else{
+                                localStorage.setItem("abonnement",'')
+                            }
+                        }
+                        swal('Payement effectué.', "Merci pour votre abonnement", "success");
+                        window.location.href = '/accueil';
+                    })
+                })
+            } else throw Error("Error interne tsy ok")
+        }).catch((error) => {
+            //console.log('Error');
+            console.log(error);
+        })
+        /* FIN CODE NALAINA */
+        /*fetch(api('paiement'),{
             headers: {"Content-Type": "application/json"},
             method: "POST",
             body: JSON.stringify({
@@ -48,57 +96,12 @@ export default function Subscription() {
             res.json().then((res)=>{
                 //console.log(res)
                 if(res.statu==200){
-                    const today = new Date();
-                    let end_date = moment(today.getFullYear()+'-'+(today.getMonth()+sub.duree+1)+'-'+today.getDate(), 'yyyy-mm-dd');
-                    //console.log(res.statu)
-                    fetch(api('subscription'), {
-                        headers: {"Content-Type": "application/json"},
-                        method: "POST",
-                        body: JSON.stringify({
-                            "id_abo": sub.id,
-                            "id_user": user.id,
-                            "date_fin": end_date._i,
-                            "prix": sub.prix
-                        })
-                    }).then((res) => {
-                        //console.log(res)
-                        if(res.ok) {
-                            //console.log(user)
-                            var myHeaders = new Headers();
-                            myHeaders.append("Content-Type", "application/json");
-                            myHeaders.append("Accept", "application/json");
-                            fetch(api("subscription/"+user.id), {
-                                headers: myHeaders,
-                                method:'GET'
-                            }).then((res)=>{
-                                //console.log(res)
-                                res.json().then((abo)=>{
-                                    //console.log(abo)
-                                    if(abo.length==0){
-                                        localStorage.setItem("abonnement",'')
-                                    }else{          
-                                        const ajd=new Date()
-                                        const dateFin=new Date(abo[0].date_fin)
-                                        if(dateFin>ajd){
-                                            localStorage.setItem("abonnement",JSON.stringify(abo[0]));
-                                        }else{
-                                            localStorage.setItem("abonnement",'')
-                                        }
-                                    }
-                                    swal('Payement effectué.', "Merci pour votre abonnement", "success");
-                                    window.location.href = '/accueil';
-                                })
-                            })
-                        } else throw Error("Error interne tsy ok")
-                    }).catch((error) => {
-                        //console.log('Error');
-                        console.log(error);
-                    })
+                    /*  TOKONY ETO ILAY CODE ENY AMBONY 
                 }else{
                     swal('Erreur.', res.msg, "error");
                 }
             })            
-        })
+        })*/
 
         /*const today = new Date();
         let end_date = moment(today.getFullYear()+'-'+(today.getMonth()+sub.duree+1)+'-'+today.getDate(), 'yyyy-mm-dd');
